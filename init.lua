@@ -5,7 +5,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -98,6 +98,12 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
+-- Tmux
+vim.keymap.set("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", { silent = true })
+vim.keymap.set("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", { silent = true })
+vim.keymap.set("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", { silent = true })
+vim.keymap.set("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", { silent = true })
+
 -- Delete into black hole register
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
@@ -138,53 +144,6 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Source change in config w/o reloading
 vim.keymap.set("n", "<space>xs", ":.lua<CR>")
 vim.keymap.set("v", "<space>xs", ":lua<CR>")
-
--- Notes.nvim
--- Global variable to store previous position
-local previous_position = {}
--- Function to open oil.nvim in the notes directory and save the current location
-function OpenNotes()
-  -- Save the current buffer, window, and cursor position
-  local current_buf = vim.api.nvim_get_current_buf()
-  local current_win = vim.api.nvim_get_current_win()
-  local current_cursor = vim.api.nvim_win_get_cursor(current_win)
-  -- Save this position in a global variable
-  previous_position = {
-    buf = current_buf,
-    win = current_win,
-    cursor = current_cursor,
-  }
-  -- Define the path to your notes directory
-  local notes_dir = vim.fn.expand "$HOME/personal/notes"
-  -- Open the oil.nvim buffer at the specified directory
-  print "Open Notes"
-  require("oil").open(notes_dir)
-end
--- Function to return to the previous position (buffer and cursor)
-function CloseNotes()
-  local current_working_dir = vim.fn.getcwd()
-  -- Check if we have a saved position
-  if not previous_position.buf then
-    print "No previous position saved!"
-    require("oil").open(current_working_dir)
-    return
-  end
-  -- Restore the previous buffer, window, and cursor position
-  vim.api.nvim_set_current_buf(previous_position.buf)
-  vim.api.nvim_set_current_win(previous_position.win)
-  vim.api.nvim_win_set_cursor(previous_position.win, previous_position.cursor)
-  -- Clear the saved position
-  previous_position = {}
-end
-
--- Optional: Create commands for easy access
-vim.api.nvim_create_user_command("OpenNotes", "lua OpenNotes()", {})
-vim.api.nvim_create_user_command("CloseNotes", "lua CloseNotes()", {})
-
--- Keybinds
-vim.api.nvim_set_keymap("n", "<leader>no", ":OpenNotes<CR>", { desc = "[N]otes [O]pen" })
-vim.api.nvim_set_keymap("n", "<leader>nc", ":CloseNotes<CR>", { desc = "[N]otes [C]lose" })
-vim.api.nvim_set_keymap("n", "<leader>ns", ":lua require('telescope.builtin').find_files({cwd = '$HOME/documents/notes'})<CR>", { desc = "[N]otes [S]earch " })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -888,6 +847,34 @@ require("lazy").setup({
       }
     end,
   },
+  {
+    "alexghergh/nvim-tmux-navigation",
+    event = "VeryLazy",
+    config = function()
+      local nvim_tmux_nav = require "nvim-tmux-navigation"
+      nvim_tmux_nav.setup {
+        disable_when_zoomed = true,
+        -- defaults to false
+        keybindings = {
+          left = "<C-h>",
+          down = "<C-j>",
+          up = "<C-k>",
+          right = "<C-l>",
+          last_active = "<C-\\>",
+          next = "<C-Space>",
+        },
+      }
+    end,
+  },
+  {
+    "1321tremblay/notes.nvim",
+    branch = "master",
+    config = function()
+      vim.keymap.set("n", "<leader>no", require("notes").OpenNotes, { desc = "[N]otes [O]pen" })
+      vim.keymap.set("n", "<leader>nc", require("notes").CloseNotes, { desc = "[N]otes [C]lose" })
+      vim.keymap.set("n", "<leader>ns", require("notes").SearchNotes, { desc = "[N]otes [S]earch" })
+    end,
+  },
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -1034,6 +1021,7 @@ require("lazy").setup({
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
+      default_file_explorer = false,
       view_options = {
         show_hidden = true,
       },
