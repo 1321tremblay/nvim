@@ -111,6 +111,8 @@ vim.keymap.set("n", "<leader>rp", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 
 vim.keymap.set("n", "<leader>xc", "<cmd>!chmod +x %<CR>", { silent = true })
 
+vim.keymap.set("n", "<space>xx", "<cmd>source %<CR>")
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
@@ -144,6 +146,9 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Source change in config w/o reloading
 vim.keymap.set("n", "<space>xs", ":.lua<CR>")
 vim.keymap.set("v", "<space>xs", ":lua<CR>")
+
+-- Key mapping for hover
+vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -868,11 +873,21 @@ require("lazy").setup({
   },
   {
     "1321tremblay/notes.nvim",
-    branch = "master",
-    config = function()
-      vim.keymap.set("n", "<leader>no", require("notes").OpenNotes, { desc = "[N]otes [O]pen" })
-      vim.keymap.set("n", "<leader>nc", require("notes").CloseNotes, { desc = "[N]otes [C]lose" })
-      vim.keymap.set("n", "<leader>ns", require("notes").SearchNotes, { desc = "[N]otes [S]earch" })
+    branch = "dev",
+
+    opts = {
+      notes_dir = "$HOME/personal/notes",
+      -- You can add other options as needed
+    },
+
+    config = function(_, opts)
+      require("notes").setup(opts)
+
+      -- key mappings using plug
+      vim.keymap.set("n", "<leader>no", "<Plug>(OpenNotes)", { desc = "[N]otes [O]pen" })
+      vim.keymap.set("n", "<leader>nc", "<Plug>(CloseNotes)", { desc = "[N]otes [C]lose" })
+      vim.keymap.set("n", "<leader>nt", "<Plug>(OpenTodo)", { desc = "[N]otes [T]odo" })
+      vim.keymap.set("n", "<leader>ns", "<Plug>(SearchNotes)", { desc = "[N]otes [S]earch" })
     end,
   },
 
