@@ -873,15 +873,10 @@ require("lazy").setup({
   },
   {
     "1321tremblay/notes.nvim",
-    branch = "dev",
-
-    opts = {
-      notes_dir = "$HOME/personal/notes",
-      -- You can add other options as needed
-    },
-
-    config = function(_, opts)
-      require("notes").setup(opts)
+    config = function()
+      require("notes").setup {
+        notes_dir = "$HOME/personal/notes",
+      }
 
       -- key mappings using plug
       vim.keymap.set("n", "<leader>no", "<Plug>(OpenNotes)", { desc = "[N]otes [O]pen" })
