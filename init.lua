@@ -302,7 +302,10 @@ require("lazy").setup({
         { "<leader>t", group = "[T]oggle" },
         { "<leader>n", group = "[N]otes" },
         { "<leader>x", group = "E[x]tra" },
-        { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
+        { "<leader>g", group = "[G]it", mode = { "n", "v" } },
+        { "<leader>gh", group = "Git [H]unk", mode = { "n", "v" } },
+        { "<leader>h", group = "[H]arpoon" },
+        { "<leader>hv", group = "Harpoon [V]ertical" },
       },
     },
   },
@@ -871,13 +874,78 @@ require("lazy").setup({
       }
     end,
   },
+
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local harpoon = require "harpoon"
+      require("harpoon"):setup() -- Using colon to call the setup method on the harpoon module
+
+      vim.keymap.set("n", "<leader>ha", function()
+        harpoon:list():add()
+      end, { desc = "Harpoon [A]dd" })
+
+      vim.keymap.set("n", "<leader>hc", function()
+        harpoon:list():clear()
+      end, { desc = "Harpoon [C]lear" })
+
+      vim.keymap.set("n", "<leader>hm", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, { desc = "Harpoon [M]enu" })
+
+      vim.keymap.set("n", "<leader>1", function()
+        harpoon:list():select(1)
+      end, { desc = "Harpoon [1]" })
+
+      vim.keymap.set("n", "<leader>2", function()
+        harpoon:list():select(2)
+      end, { desc = "Harpoon [2]" })
+
+      vim.keymap.set("n", "<leader>3", function()
+        harpoon:list():select(3)
+      end, { desc = "Harpoon [3]" })
+
+      vim.keymap.set("n", "<leader>4", function()
+        harpoon:list():select(4)
+      end, { desc = "Harpoon [4]" })
+
+      vim.keymap.set("n", "<leader>5", function()
+        harpoon:list():select(5)
+      end, { desc = "Harpoon [5]" })
+
+      vim.keymap.set("n", "<leader>hv1", function()
+        harpoon:list():select(1, { vsplit = true })
+      end, { desc = "Harpoon vertical [1]" })
+
+      vim.keymap.set("n", "<leader>hv2", function()
+        harpoon:list():select(2, { vsplit = true })
+      end, { desc = "Harpoon vertical [2]" })
+
+      vim.keymap.set("n", "<leader>hv3", function()
+        harpoon:list():select(3, { vsplit = true })
+      end, { desc = "Harpoon vertical [3]" })
+
+      vim.keymap.set("n", "<leader>hv4", function()
+        harpoon:list():select(4, { vsplit = true })
+      end, { desc = "Harpoon vertical [4]" })
+
+      vim.keymap.set("n", "<leader>hv5", function()
+        harpoon:list():select(5, { vsplit = true })
+      end, { desc = "Harpoon vertical [5]" })
+    end,
+  },
+
   {
     "1321tremblay/notes.nvim",
+    branch = "refactor",
     config = function()
       require("notes").setup {
         notes_dir = "$HOME/personal/notes",
+        todo_file = "todo.md",
+        file_explorer = "oil",
       }
-
       -- key mappings using plug
       vim.keymap.set("n", "<leader>no", "<Plug>(OpenNotes)", { desc = "[N]otes [O]pen" })
       vim.keymap.set("n", "<leader>nc", "<Plug>(CloseNotes)", { desc = "[N]otes [C]lose" })
@@ -885,6 +953,25 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>ns", "<Plug>(SearchNotes)", { desc = "[N]otes [S]earch" })
     end,
   },
+
+  -- {
+  --   dir = "~/projects/notes.nvim/",
+  --   branch = "refactor",
+  --   config = function()
+  --     require("notes").setup {
+  --       notes_dir = "~/personal/notes",
+  --       todo_file = "todo.md",
+  --       file_explorer = "oil",
+  --     }
+  --
+  --     -- Key mappings
+  --     vim.keymap.set("n", "<leader>no", "<Plug>(OpenNotes)", { desc = "[N]otes [O]pen" })
+  --     vim.keymap.set("n", "<leader>nc", "<Plug>(CloseNotes)", { desc = "[N]otes [C]lose" })
+  --     vim.keymap.set("n", "<leader>nt", "<Plug>(OpenTodo)", { desc = "[N]otes [T]odo" })
+  --     vim.keymap.set("n", "<leader>ns", "<Plug>(SearchNotes)", { desc = "[N]otes [S]earch" })
+  --     vim.keymap.set("n", "<leader>nr", ":ReloadNotes<CR>", { desc = "Reload Notes Plugin" })
+  --   end,
+  -- },
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -1001,22 +1088,22 @@ require("lazy").setup({
 
           -- Actions
           -- visual mode
-          map("v", "<leader>hs", function()
+          map("v", "<leader>ghs", function()
             gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
           end, { desc = "git [s]tage hunk" })
-          map("v", "<leader>hr", function()
+          map("v", "<leader>ghr", function()
             gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
           end, { desc = "git [r]eset hunk" })
           -- normal mode
-          map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "git [s]tage hunk" })
-          map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "git [r]eset hunk" })
-          map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "git [S]tage buffer" })
-          map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "git [u]ndo stage hunk" })
-          map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "git [R]eset buffer" })
-          map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git [p]review hunk" })
-          map("n", "<leader>hb", gitsigns.blame_line, { desc = "git [b]lame line" })
-          map("n", "<leader>hd", gitsigns.diffthis, { desc = "git [d]iff against index" })
-          map("n", "<leader>hD", function()
+          map("n", "<leader>ghs", gitsigns.stage_hunk, { desc = "git [s]tage hunk" })
+          map("n", "<leader>ghr", gitsigns.reset_hunk, { desc = "git [r]eset hunk" })
+          map("n", "<leader>ghS", gitsigns.stage_buffer, { desc = "git [S]tage buffer" })
+          map("n", "<leader>ghu", gitsigns.undo_stage_hunk, { desc = "git [u]ndo stage hunk" })
+          map("n", "<leader>ghR", gitsigns.reset_buffer, { desc = "git [R]eset buffer" })
+          map("n", "<leader>ghp", gitsigns.preview_hunk, { desc = "git [p]review hunk" })
+          map("n", "<leader>ghb", gitsigns.blame_line, { desc = "git [b]lame line" })
+          map("n", "<leader>ghd", gitsigns.diffthis, { desc = "git [d]iff against index" })
+          map("n", "<leader>ghD", function()
             gitsigns.diffthis "@"
           end, { desc = "git [D]iff against last commit" })
           -- Toggles
