@@ -939,7 +939,7 @@ require("lazy").setup({
 
   {
     "1321tremblay/notes.nvim",
-    branch = "refactor",
+    branch = "master",
     config = function()
       require("notes").setup {
         notes_dir = "$HOME/personal/notes",
