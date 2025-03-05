@@ -7,6 +7,7 @@ return {
         notes_dir = "$HOME/personal/notes",
         todo_file = "todo.md",
         file_explorer = "oil",
+        fuzzy_finder = "picker",
       }
       -- key mappings using plug
       vim.keymap.set("n", "<leader>no", "<Plug>(OpenNotes)", { desc = "[O]pen" })
