@@ -5,11 +5,9 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Append line below to end of current line
 vim.keymap.set("n", "J", "mzJ`z")
-
 -- Put cursor in the middle when searching using /
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
-
 -- Put cursor in the middle when going up or down
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
@@ -56,3 +54,19 @@ vim.keymap.set("v", "<space>xs", ":lua<CR>")
 
 -- Key mapping for hover
 vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
+
+-- Navigate buffer
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
+vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
+
+-- git
+vim.keymap.set("n", "<leader>ga", ":!git add .<CR>", { desc = "Git add all" })
+vim.keymap.set("n", "<leader>gc,", ":!git commit<cr>", {desc = "Git commit"})
+vim.keymap.set("n", "<leader>gp", function()
+    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+    vim.cmd("!git push origin " .. branch)
+end, { desc = "Git push to origin" })
+vim.keymap.set("n", "<leader>gP", function()
+    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+    vim.cmd("!git pull origin " .. branch)
+end, { desc = "Git pull to origin" })

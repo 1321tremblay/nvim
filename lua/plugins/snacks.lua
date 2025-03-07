@@ -508,13 +508,6 @@ return {
       mode = { "n", "v" },
     },
     {
-      "<leader>gg",
-      function()
-        Snacks.lazygit()
-      end,
-      desc = "Lazygit",
-    },
-    {
       "<leader>D",
       function()
         Snacks.notifier.hide()

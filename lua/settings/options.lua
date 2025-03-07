@@ -1,30 +1,22 @@
 vim.g.mapleader = " "
+
 vim.g.maplocalleader = " "
 
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- Make line numbers default
+-- Enable line number
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
+
+--  enable relative lie number
 vim.opt.relativenumber = true
 
--- Enable mouse mode, can be useful for resizing splits for example!
+-- Enable mouse mode
 vim.opt.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.schedule(function()
   vim.opt.clipboard = "unnamedplus"
 end)
@@ -34,7 +26,10 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
+
+-- Set undo history file path
 vim.opt.undodir = os.getenv "HOME" .. "/.local/share/nvim/undodir"
+
 -- Add @ and - to valid filename
 vim.opt.isfname:append "@-@"
 
@@ -46,7 +41,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = "no"
+vim.opt.signcolumn = "auto"
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -59,8 +54,6 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
@@ -73,6 +66,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 3
 
+-- set fillchars characters
 vim.opt.fillchars:append {
   horiz = " ", -- Horizontal split
   horizup = " ",
@@ -82,3 +76,6 @@ vim.opt.fillchars:append {
   vertright = " ",
   verthoriz = " ",
 }
+
+-- Set termguicolors to enable highlight groups (default: false)
+vim.opt.termguicolors = true
