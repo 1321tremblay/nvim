@@ -61,12 +61,20 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
 
 -- git
 vim.keymap.set("n", "<leader>ga", ":!git add .<CR>", { desc = "Git add all" })
-vim.keymap.set("n", "<leader>gc,", ":!git commit<cr>", {desc = "Git commit"})
+-- Git commit (opens commit message in Neovim)
+vim.keymap.set("n", "<leader>gc", function()
+  vim.cmd "tabnew" -- Open a new tab
+  vim.cmd "terminal git commit" -- Run `git commit` inside the terminal
+  vim.cmd "startinsert" -- Enter insert mode automatically
+end, { desc = "Git commit with message buffer" })
+
+-- vim.keymap.set("n", "<leader>gc", ":!git commit<cr>", { desc = "Git commit" })
 vim.keymap.set("n", "<leader>gp", function()
-    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
-    vim.cmd("!git push origin " .. branch)
+  local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+  vim.cmd("!git push origin " .. branch)
 end, { desc = "Git push to origin" })
+
 vim.keymap.set("n", "<leader>gP", function()
-    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
-    vim.cmd("!git pull origin " .. branch)
+  local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+  vim.cmd("!git pull origin " .. branch)
 end, { desc = "Git pull to origin" })
