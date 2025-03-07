@@ -6,9 +6,9 @@ return {
         options = {
           section_separators = "|",
           component_separators = "|",
-          theme = {
-            normal = { c = { bg = "NONE" } },
-          },
+          -- theme = {
+          --   normal = { c = { bg = "NONE" } },
+          -- },
         },
         sections = {
           lualine_y = {

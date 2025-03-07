@@ -2,7 +2,9 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
+
     opts = {
+      notify = { enabled = false },
       cmdline = {
         enabled = true,
         view = "cmdline",
@@ -10,12 +12,6 @@ return {
     },
     dependencies = {
       "MunifTanjim/nui.nvim",
-      {
-        "rcarriga/nvim-notify",
-        opts = {
-          background_colour = "#000000",
-        },
-      },
     },
   },
 }
