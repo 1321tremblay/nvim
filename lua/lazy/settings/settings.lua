@@ -1,6 +1,29 @@
 -- Settings
 
 --  Autocommands {{{
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     local note_path = "/home/olivier/personal/notes/startup.md"
+--     local current_cwd = vim.fn.getcwd() -- Save the original working directory
+--     vim.cmd("edit " .. vim.fn.fnameescape(note_path))
+--     vim.cmd("cd " .. vim.fn.fnameescape(current_cwd))
+--   end,
+-- })
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     local note_path = "/home/olivier/personal/notes/startup.md"
+--     local dir = vim.fn.fnamemodify(note_path, ":h")
+--
+--     -- Create directory if it doesn't exist
+--     if vim.fn.isdirectory(dir) == 0 then
+--       vim.fn.mkdir(dir, "p")
+--     end
+--
+--     vim.cmd("edit " .. vim.fn.fnameescape(note_path))
+--   end,
+-- })
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
@@ -198,6 +221,12 @@ vim.opt.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
+
+-- Indent
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 3

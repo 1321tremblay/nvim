@@ -187,6 +187,7 @@ return {
       vim.keymap.set("n", "<leader>nc", "<Plug>(CloseNotes)", { desc = "[C]lose" })
       vim.keymap.set("n", "<leader>nt", "<Plug>(OpenTodo)", { desc = "[T]odo" })
       vim.keymap.set("n", "<leader>ns", "<Plug>(SearchNotes)", { desc = "[S]earch" })
+      vim.keymap.set("n", "<leader>ng", "<Plug>(GrepNotes)", { desc = "[G]rep" })
     end,
   },
   --}}}
@@ -243,4 +244,39 @@ return {
     end, { desc = "Open parent directory" }),
   },
   --}}}
+
+  -- Rust {{{
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
+  -- {
+  --   "simrat39/rust-tools.nvim",
+  --   dependencies = { "neovim/nvim-lspconfig" },
+  --   opts = function()
+  --     local rt = require("rust-tools")
+  --     return {
+  --       tools = {
+  --         hover_actions = {
+  --           auto_focus = true, -- Ensure hover window is focused
+  --         },
+  --       },
+  --       server = {
+  --         on_attach = function(client, bufnr)
+  --           local opts = { buffer = bufnr, silent = true }
+  --           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- Default LSP Hover
+  --           vim.keymap.set("n", "<Leaderk>", rt.hover_actions.hover_actions, opts) -- Rust Tools Hover
+  --           vim.keymap.set("n", "<Leader>ca", rt.code_action_group.code_action_group, opts)
+  --         end,
+  --         settings = {
+  --           ["rust-analyzer"] = {
+  --             cargo = { allFeatures = true },
+  --             checkOnSave = { command = "clippy" },
+  --           },
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
 }

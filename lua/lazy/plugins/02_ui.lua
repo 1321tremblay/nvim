@@ -84,9 +84,9 @@ return {
         options = {
           section_separators = "|",
           component_separators = "|",
-          -- theme = {
-          --   normal = { c = { bg = "NONE" } },
-          -- },
+          theme = {
+            normal = { c = { bg = "NONE" } },
+          },
         },
         sections = {
           lualine_y = {
@@ -359,5 +359,15 @@ return {
   --     },
   --   },
   -- },
+  --}}}
+
+  -- Indent line {{{
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {
+      scope = { enabled = true },
+    },
+  },
   --}}}
 }

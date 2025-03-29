@@ -25,9 +25,9 @@ return {
 
       require("mini.jump").setup()
 
-      require("mini.starter").setup()
-
-      require("mini.sessions").setup()
+      -- require("mini.starter").setup()
+      --
+      -- require("mini.sessions").setup()
 
       -- require("mini.completion").setup()
       --

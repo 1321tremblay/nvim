@@ -194,7 +194,15 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
+        emmet_language_server = {
+          filetypes = { "html", "css", "javascript", "javascriptreact", "typescriptreact" },
+          init_options = {
+            showAbbreviationSuggestions = true,
+            showExpandedAbbreviation = "always",
+            syntaxProfiles = { javascript = "html" }, -- Ensures HTML inside JS works
+          },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -425,9 +433,13 @@ return {
         lua = { "stylua" },
         html = { "prettier" },
         css = { "prettier" },
+        javascript = { "prettier" },
+        json = { "prettier" },
         astro = { "prettier_astro" },
+        go = { "gofumpt" },
+        rust = { "rustfmt" },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
