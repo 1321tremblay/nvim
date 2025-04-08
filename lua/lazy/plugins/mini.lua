@@ -24,16 +24,6 @@ return {
       require("mini.git").setup()
 
       require("mini.jump").setup()
-
-      -- require("mini.starter").setup()
-      --
-      -- require("mini.sessions").setup()
-
-      -- require("mini.completion").setup()
-      --
-      -- require("mini.snippets").setup()
-      --
-      -- require("mini.icons").setup()
     end,
   },
 }
