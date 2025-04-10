@@ -2,10 +2,6 @@ vim.g.mapleader = " "
 
 vim.g.maplocalleader = " "
 
-vim.opt.foldmethod = "marker"
-vim.opt.foldcolumn = "0"
-vim.opt.foldtext = ""
-
 vim.g.have_nerd_font = true
 
 -- Enable line number
@@ -78,20 +74,24 @@ vim.opt.scrolloff = 3
 
 -- set fillchars characters
 vim.opt.fillchars:append({
-  horiz = " ", -- Horizontal split
-  horizup = " ",
-  horizdown = " ",
-  vert = " ", -- Vertical split
-  vertleft = " ",
-  vertright = " ",
-  verthoriz = " ",
+  vert = "│",
+  horiz = "─",
+  horizup = "┴",
+  horizdown = "┬",
+  vertleft = "┤",
+  vertright = "├",
+  verthoriz = "┼",
 })
 
 -- Set termguicolors to enable highlight groups (default: false)
 vim.opt.termguicolors = true
 
+vim.opt.colorcolumn = "80"
+
 -- disable new line auto comment
 vim.cmd([[autocmd FileType * set formatoptions-=ro]])
+
+vim.diagnostic.config({ virtual_text = false })
 
 vim.diagnostic.config({
   virtual_lines = {

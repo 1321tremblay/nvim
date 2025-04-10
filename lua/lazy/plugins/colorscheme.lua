@@ -22,7 +22,7 @@ return {
       vim.api.nvim_set_hl(0, "DiagnosticSignInfo", { bg = "none", fg = "#d65d0e" })
       vim.api.nvim_set_hl(0, "DiagnosticSignHint", { bg = "none", fg = "#98971a" })
 
-      vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none" })
+      vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none", fg = "#111111" })
       vim.api.nvim_set_hl(0, "PMenu", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "PmenuThumb", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "Normal", { bg = "none" })

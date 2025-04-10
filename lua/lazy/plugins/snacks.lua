@@ -1,4 +1,5 @@
 return {
+
   {
     "folke/snacks.nvim",
     priority = 1000,
@@ -121,13 +122,6 @@ return {
           Snacks.picker.smart()
         end,
         desc = "Smart Find Files",
-      },
-      {
-        "<leader>,",
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = "Buffers",
       },
       {
         "<leader>/",
